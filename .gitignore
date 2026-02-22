@@ -1,0 +1,73 @@
+## .gitignore for Interview System
+
+# .NET
+bin/
+obj/
+publish/
+*.user
+*.suo
+*.userprefs
+*.userosscache
+*.pidb
+*.booproj
+*.svclog
+*.log
+*.cache
+*.ncrunch*
+*.orig
+*.dbmdl
+*.jfm
+*.swp
+*.sln.docstates
+.vs/
+.vscode/
+
+# Terraform
+*.tfstate
+*.tfstate.*
+terraform.tfvars
+*.tfvars
+*.tfplan
+crash.log
+crash.*.log
+override.tf
+override.tf.json
+terraform.rc
+
+# Azure Functions
+local.settings.json
+secrets.json
+appsettings.*.json
+!appsettings.json
+
+# Secrets
+*.key
+*.pem
+*.crt
+*.pfx
+secrets/
+secrets.*.json
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini

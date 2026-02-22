@@ -1,0 +1,34 @@
+{
+  "version": "2.0",
+  "logging": {
+    "fileLoggingMode": "never",
+    "logLevel": {
+      "default": "Information",
+      "Function": "Information",
+      "Host.Aggregator": "Information",
+      "Host.Results": "Information",
+      "Microsoft": "Warning"
+    },
+    "applicationInsights": {
+      "samplingSettings": {
+        "isEnabled": true,
+        "maxTelemetryItemsPerSecond": 20,
+        "excludedTypes": "Exception;Dependency"
+      },
+      "enableLiveMetrics": true,
+      "enableDependencyTracking": true
+    }
+  },
+  "extensions": {
+    "durableTask": {
+      "hubName": "InterviewTaskHubIndia",
+      "storageProvider": {
+        "connectionStringName": "AzureWebJobsStorage"
+      },
+      "tracing": {
+        "traceInputsAndOutputs": false,
+        "traceReplayEvents": false
+      }
+    }
+  }
+}

@@ -1,0 +1,43 @@
+{
+    "properties": {
+        "displayName": "Enforce HTTPS on Function Apps - India Region",
+        "policyType": "Custom",
+        "mode": "Indexed",
+        "description": "Ensures HTTPS is enabled for all Function Apps in India region",
+        "metadata": {
+            "version": "1.0.0",
+            "category": "App Service",
+            "region": "India"
+        },
+        "parameters": {},
+        "policyRule": {
+            "if": {
+                "allOf": [
+                    {
+                        "field": "type",
+                        "equals": "Microsoft.Web/sites"
+                    },
+                    {
+                        "field": "kind",
+                        "like": "functionapp*"
+                    },
+                    {
+                        "field": "location",
+                        "in": [
+                            "centralindia",
+                            "southindia",
+                            "westindia"
+                        ]
+                    },
+                    {
+                        "field": "Microsoft.Web/sites/httpsOnly",
+                        "notEquals": true
+                    }
+                ]
+            },
+            "then": {
+                "effect": "deny"
+            }
+        }
+    }
+}

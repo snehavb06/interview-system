@@ -1,0 +1,51 @@
+<!-- terraform/policies/jwt-policy.xml -->
+<policies>
+    <inbound>
+        <base />
+        <validate-azure-ad-token tenant-id="{{TENANT_ID}}" audience="{{API_CLIENT_ID}}">
+            <client-application-ids>
+                <application-id>{{API_CLIENT_ID}}</application-id>
+            </client-application-ids>
+        </validate-azure-ad-token>
+        <rate-limit calls="100" renewal-period="60" />
+        <cors allow-credentials="true">
+            <allowed-origins>
+                <origin>https://{{FUNCTION_APP_HOSTNAME}}</origin>
+                <origin>http://localhost:3000</origin>
+                <origin>https://*.azurewebsites.net</origin>
+            </allowed-origins>
+            <allowed-methods>
+                <method>GET</method>
+                <method>POST</method>
+                <method>PUT</method>
+                <method>DELETE</method>
+                <method>OPTIONS</method>
+            </allowed-methods>
+            <allowed-headers>
+                <header>*</header>
+            </allowed-headers>
+        </cors>
+        <set-header name="X-India-Region" exists-action="override">
+            <value>@(context.Request.OriginalUrl.Host.Contains("centralindia") ? "Pune" : context.Request.OriginalUrl.Host.Contains("southindia") ? "Chennai" : "Mumbai")</value>
+        </set-header>
+    </inbound>
+    <backend>
+        <base />
+    </backend>
+    <outbound>
+        <base />
+    </outbound>
+    <on-error>
+        <base />
+        <return-response>
+            <set-status code="500" reason="Internal Server Error" />
+            <set-body>@{
+                return new JObject(
+                    new JProperty("error", "An error occurred in India region"),
+                    new JProperty("timestamp", DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ")),
+                    new JProperty("region", "India")
+                ).ToString();
+            }</set-body>
+        </return-response>
+    </on-error>
+</policies>
